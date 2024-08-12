@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProviders";
 
 const Login = () => {
-  const { signIn, setUser } = useContext(AuthContext);
+  const { signIn } = useContext(AuthContext);
   const handleLogin = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -13,7 +13,6 @@ const Login = () => {
     signIn(email, password).then((result) => {
       const loggedUser = result.user;
       console.log(loggedUser);
-      setUser(loggedUser);
       form.reset();
     });
   };

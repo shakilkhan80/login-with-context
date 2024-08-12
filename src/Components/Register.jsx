@@ -3,19 +3,19 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProviders";
 
 const Register = () => {
-  const { user, createUser, setUser } = useContext(AuthContext);
+  const { user, createUser } = useContext(AuthContext);
   const handleRegister = (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
     const name = form.name.value;
-    console.log(name,user)
+    console.log(name, user);
 
     createUser(email, password)
       .then((result) => {
         const loggedUser = result.user;
-        setUser(loggedUser);
+        console.log(loggedUser);
         form.reset();
       })
       .catch((error) => {
