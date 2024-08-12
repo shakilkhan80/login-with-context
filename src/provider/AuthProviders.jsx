@@ -1,19 +1,23 @@
 import {
-    createUserWithEmailAndPassword,
-    getAuth,
-    onAuthStateChanged,
-    signInWithEmailAndPassword,
-    signOut,
+  createUserWithEmailAndPassword,
+  getAuth,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { app } from "../Firebase/firebase.init";
 
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
 
 // eslint-disable-next-line react/prop-types
 const AuthProviders = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const createUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -23,9 +27,13 @@ const AuthProviders = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  const logOut = () =>{
-    return signOut(auth)
-  }
+  const signInWithGoogle = () => {
+    return signInWithPopup(auth, googleProvider);
+  };
+
+  const logOut = () => {
+    return signOut(auth);
+  };
 
   // observe the current user
   useEffect(() => {
@@ -33,6 +41,7 @@ const AuthProviders = ({ children }) => {
       console.log("user current", currentUser);
 
       setUser(currentUser);
+      setLoading(false);
     });
     return () => unsubscribe();
   }, []);
@@ -41,7 +50,9 @@ const AuthProviders = ({ children }) => {
     user,
     createUser,
     signIn,
-    logOut
+    logOut,
+    loading,
+    signInWithGoogle,
   };
 
   return (

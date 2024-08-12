@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../provider/AuthProviders";
 
 const Login = () => {
-  const { signIn } = useContext(AuthContext);
+  const { signIn, signInWithGoogle } = useContext(AuthContext);
   const handleLogin = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -56,6 +56,12 @@ const Login = () => {
               <button className="btn btn-primary">Login</button>
             </div>
           </form>
+          <button
+            onClick={signInWithGoogle}
+            className="btn btn-circle btn-outline"
+          >
+            Google
+          </button>
           <p className="my-3 ml-2">
             <small>
               Don&apos;t have an account? <Link to="/register">Register</Link>

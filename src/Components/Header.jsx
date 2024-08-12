@@ -42,7 +42,10 @@ const Header = () => {
               <Link to="/">Home</Link>
             </li>
             <li>
-              {user?.email}
+              <Link to="/orders">Orders</Link>
+            </li>
+            <li>
+              <Link>{user?.email}</Link>
             </li>
             {user ? (
               <li>
